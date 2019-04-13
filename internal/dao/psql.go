@@ -2,15 +2,32 @@ package dao
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
 )
 
 func NewCurrencyDao() CurrencyDao {
+
+	/*
+		os.Setenv("db-username", "yorick")
+		os.Setenv("db-password", "yorick123")
+		os.Setenv("db-url", "localhost")
+		os.Setenv("db-port", "5432")
+		os.Setenv("db-database", "currency")
+	*/
+	username := os.Getenv("db-username")
+	password := os.Getenv("db-password")
+	url := os.Getenv("db-url")
+	port := os.Getenv("db-port")
+	database := os.Getenv("db-database")
+	connection_str := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", username, password, url, port, database)
+	log.Println("connect postgres:", connection_str)
 	dao := new(PsqlCurrencyDao)
-	db, err := sql.Open("postgres", "postgres://yorick:yorick123@localhost:5432/currency?sslmode=disable")
+	db, err := sql.Open("postgres", connection_str)
 	if err != nil {
 		log.Fatal("failed to open db connection")
 	}
