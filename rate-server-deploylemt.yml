@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rate-server-deployment
+  labels:
+    app: rate-server
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: rate-server
+  template:
+    metadata:
+      labels:
+        app: rate-server
+    spec:
+      containers:
+      - name : web-server
+        image: rate-server:1.0
+        ports:
+        - containerPort: 8080
+
