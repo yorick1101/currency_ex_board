@@ -19,3 +19,14 @@ spec:
         image: rate-server:1.0
         ports:
         - containerPort: 8080
+        env:
+        - name: db-username
+          value: "yorick"
+        - name: db-password
+          value: "yorick123"
+        - name: db-url
+          value: "localhost"
+        - name: db-port
+          value: "5432"
+        - name: db-database
+          value: "currency"
